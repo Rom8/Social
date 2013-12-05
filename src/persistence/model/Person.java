@@ -2,6 +2,7 @@ package persistence.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -50,7 +51,7 @@ public class Person implements Serializable {
 	private String password;
 	private int hash;
 	private int salt;
-	private Set<AccessCircle> accessCircles;
+	private Set<AccessCircle> accessCircles = new HashSet<AccessCircle>();
 
 	public Person() {
 	}

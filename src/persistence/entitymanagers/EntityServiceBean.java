@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 
 import persistence.model.AccessCircle;
 import persistence.model.Person;
+import persistence.model.RelationType;
 
 /**
  * Session Bean implementation class EntityServiceBean
@@ -46,15 +47,10 @@ public class EntityServiceBean implements EntityService {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void createNewPerson(String email, String password, String firstName){
 		Person person = new Person(email, password, firstName);
-		try{
-			em.persist(person);
-			System.out.println("New user with name " + person.getFirstName() + " has been persisted.");
-			//Access Circle defaults are inserted by trigger on table PERSON, which fires after 
-				//new person has been inserted.
-		}catch(IllegalArgumentException e){
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
+		for(RelationType rt: RelationType.values())
+			person.addAccessCircle(new AccessCircle(rt.toString()));
+		em.persist(person);
+		System.out.println("New user with name " + person.getFirstName() + " has been persisted.");
 	}
 
 	public Person singPersonIn(String email, String password) {
