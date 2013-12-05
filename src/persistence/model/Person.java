@@ -166,7 +166,7 @@ public class Person implements Serializable {
 	}
 	
 	//bi-directional many-to-one association to AccessCircle
-	@OneToMany(mappedBy="person", fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
+	@OneToMany(mappedBy="person", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	public Set<AccessCircle> getAccessCircles() {
 		return this.accessCircles;
 	}
