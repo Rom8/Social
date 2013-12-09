@@ -11,7 +11,7 @@
 		</td>
 		<td width="80">
 			<a href="/Social/id<%=Helper
-			.getSessionPersonId(request.getSession(false)) %>/friends">Relations</a>
+			.getSessionPersonId(request.getSession(false)) %>/contacts">Contacts</a>
 		</td>
 		<td width="120">Conversations</td>
 		<td width="70">Photos</td>

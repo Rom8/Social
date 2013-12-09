@@ -26,7 +26,7 @@
     </rule>
     
 	<rule>
-        <from>^/id([0-9]+)/friends$</from>
+        <from>^/id([0-9]+)/contacts$</from>
         <set name="personFriendsId">$1</set>
         <to type="forward">/FrontController</to>
     </rule>

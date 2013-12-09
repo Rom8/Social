@@ -59,7 +59,7 @@ public class FrontController extends HttpServlet {
 		}else
 			
 		if (request.getAttribute(Links.PERSON_FRIENDS_ID) != null) {
-			dispatch(request, response, Links.PERSON_FRIENDS_ID, "friends.jsp");
+			dispatch(request, response, Links.PERSON_FRIENDS_ID, "contacts.jsp");
 		}else
 			
 		if(request.getAttribute(Links.PERSON_CIRCLES_ID) != null){
@@ -140,7 +140,7 @@ public class FrontController extends HttpServlet {
 		addPersonToCircle(RelationType.FOLLOWERS, owner, person);
 		addPersonToCircle(RelationType.IFOLLOW, person, owner);
 		
-		response.sendRedirect("/Social/id" + owner.getPersonId() + "/friends");
+		response.sendRedirect("/Social/id" + owner.getPersonId() + "/contacts");
 	}
 	
 	protected void confirmRequest(HttpServletRequest request,
@@ -156,7 +156,7 @@ public class FrontController extends HttpServlet {
 		removePersonFromCircle(RelationType.MYREQUESTS, person, owner);
 		addPersonToCircle(RelationType.FRIENDS, person, owner);
 		
-		response.sendRedirect("/Social/id" + owner.getPersonId() + "/friends");
+		response.sendRedirect("/Social/id" + owner.getPersonId() + "/contacts");
 	}
 	
 	private void addPersonToCircle(RelationType relationType, Person owner, Person person){
