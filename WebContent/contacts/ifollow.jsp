@@ -1,3 +1,4 @@
+<%@page import="helpers.JSPHelper"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -21,7 +22,11 @@ Collections.sort(persons);
 for(Person p: persons){
 %>
 	<%= p.getFirstName() %>
-	<%= p.getLastName() %> <br>
+	<%= p.getLastName() %>
+	<%= JSPHelper.getButton( "Unfollow", 
+							 "unfollow", String.valueOf(p.getPersonId()),
+							 "oldURI", request.getRequestURI()
+							) %>
 <%
 }
 %></body>

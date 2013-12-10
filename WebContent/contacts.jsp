@@ -30,8 +30,5 @@
 			<td><a href="/Social/contacts/ifollow.jsp">I follow</a></td>
 			<td><a href="/Social/contacts/banned.jsp">Banned</a></td>
 		</tr>
-		<tr>
-			<td colspan="3"><a href="/Social/id<%=person.getPersonId() %>/circles">Circles...</a></td>
-		</tr>
 </table>
 </html>

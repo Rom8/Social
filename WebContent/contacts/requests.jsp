@@ -1,3 +1,7 @@
+<%@page import="helpers.JSPHelper"%>
+<%@page import="java.util.Collections"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page import="persistence.model.RelationType"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -10,7 +14,24 @@
 </head>
 <body>
 <%= person.getFirstName() %>
-<br>
-<%= person.getAccessCircleByName(RelationType.REQUESTED.toString()).getName() %>
+<%
+AccessCircle circle = person.getAccessCircleByName(RelationType.REQUESTED.toString());
+List<Person> persons = new ArrayList<Person>(circle.getPersons());
+Collections.sort(persons);
+for(Person p: persons){
+%>
+	<%= p.getFirstName() %>
+	<%= p.getLastName() %>
+	<%= JSPHelper.getButton( "Add to friends", 
+							 "confirmFriendRequest", String.valueOf(p.getPersonId()),
+							 "oldURI", request.getRequestURI()
+							) %>
+	<%= JSPHelper.getButton( "Keep as follower",
+							 "keepAsFollower", String.valueOf(p.getPersonId()),
+							 "oldURI", request.getRequestURI()
+							) %>
+<%
+}
+%>
 </body>
 </html>

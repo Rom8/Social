@@ -1,3 +1,4 @@
+<%@page import="helpers.JSPHelper"%>
 <%@page import="persistence.model.RelationType"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -44,17 +45,12 @@ if(session == null){
 	}
 }else{
 %>
-	<form action="/Social/FrontController" method="post">
-		<input type="hidden" name="friendRequest"
-			value="<%=p.getPersonId() %>">
-		<input type="submit" value="Send Friend Request">
-	</form>
-	<form action="/Social/FrontController" method="post">
-		<input type="hidden" name="follow"
-			value="<%=p.getPersonId() %>">
-		<input type="submit" value="Follow">
-	</form>
-	
+<%= JSPHelper.getButton("Send Friend Request",
+						"friendRequest", String.valueOf(p.getPersonId()),
+						"oldURI", request.getRequestURI())  %>
+<%= JSPHelper.getButton("Follow",
+						"follow", String.valueOf(p.getPersonId()),
+						"oldURI", request.getRequestURI())  %>
 <%
 }
 %>

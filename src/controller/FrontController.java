@@ -3,8 +3,6 @@ package controller;
 import java.io.IOException;
 
 import javax.ejb.EJB;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import persistence.entitymanagers.AccessHelper;
 import persistence.entitymanagers.EntityService;
 import persistence.entitymanagers.GenericManager;
 import persistence.model.AccessCircle;
@@ -40,6 +39,7 @@ public class FrontController extends HttpServlet {
 	
 	protected void process(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		String oldURI = request.getParameter("oldURI");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String emailSingUp = request.getParameter("emailSingUp");
@@ -51,19 +51,10 @@ public class FrontController extends HttpServlet {
 		String confirmFriendRequest = request.getParameter("confirmFriendRequest");
 		String keepAsFollower = request.getParameter("keepAsFollower");
 		String follow = request.getParameter("follow");
+		String unfollow = request.getParameter("unfollow");
 
 		if (request.getAttribute(Links.PERSON_ID) != null) {
 			dispatch(request, response, Links.PERSON_ID, "human.jsp");
-		}else
-			
-		if (request.getAttribute(Links.PERSON_FRIENDS_ID) != null) {
-			System.err.println("person_friends_id when???");
-//			dispatch(request, response, Links.PERSON_FRIENDS_ID, "contacts.jsp");
-		}else
-			
-		if(request.getAttribute(Links.PERSON_CIRCLES_ID) != null){
-			System.err.println("person_circle_id when???");
-//			dispatch(request, response, Links.PERSON_CIRCLES_ID, "friends_include/AccessCircles.jsp");
 		}else
 			
 		if ((email != null) && (password != null)) {
@@ -84,19 +75,23 @@ public class FrontController extends HttpServlet {
 		}else
 			
 		if(friendRequest != null){
-			sendFriendRequest(request, response, friendRequest);
+			sendFriendRequest(request, response, friendRequest, oldURI);
 		}else
 		
 		if(confirmFriendRequest != null){
-			confirmRequest(request, response, confirmFriendRequest);
+			confirmRequest(request, response, confirmFriendRequest, oldURI);
 		}else
 			
 		if(follow != null){
-			followPerson(request, response, follow);
+			followPerson(request, response, follow, oldURI);
+		}else
+			
+		if(unfollow != null){
+			unfollowPerson(request, response, unfollow, oldURI);
 		}else
 			
 		if(keepAsFollower != null){
-			keepHumanAsFollower(request, response, keepAsFollower);
+			keepHumanAsFollower(request, response, keepAsFollower, oldURI);
 		}else
 			
 		if (request.getSession(false) == null) {
@@ -105,100 +100,108 @@ public class FrontController extends HttpServlet {
 			((long)request.getSession(false).getAttribute(Links.PERSON_ID)));
 	}
 	
+	protected void unfollowPerson(HttpServletRequest request,
+			HttpServletResponse response, String unfollow, String oldURI)
+				throws ServletException, IOException {
+		long personId = Long.valueOf(unfollow);
+		Person person = es.getPersonById(personId);
+		HttpSession session = request.getSession(false);
+		Person owner = es.getPersonById( (long) session.getAttribute(Links.PERSON_ID) );
+		
+		removePersonFromCircle(RelationType.IFOLLOW.toString(), owner, person);
+		removePersonFromCircle(RelationType.FOLLOWERS.toString(), person, owner);
+		if(oldURI.endsWith("human.jsp"))
+			response.sendRedirect("/Social/id" + unfollow);
+		else
+			response.sendRedirect(oldURI);
+	}
+	
 	protected void followPerson(HttpServletRequest request,
-	HttpServletResponse response, String follow) 
+	HttpServletResponse response, String follow, String oldURI) 
 				throws ServletException, IOException {
 		long personId = Long.valueOf(follow);
 		Person person = es.getPersonById(personId);
 		HttpSession session = request.getSession(false);
 		Person owner = es.getPersonById( (long) session.getAttribute(Links.PERSON_ID) );
 		
-		addPersonToCircle(RelationType.IFOLLOW, owner, person);
-		addPersonToCircle(RelationType.FOLLOWERS, person, owner);
-		
-		response.sendRedirect("/Social/id" + person.getPersonId());
+		addPersonToCircle(RelationType.IFOLLOW.toString(), owner, person);
+		addPersonToCircle(RelationType.FOLLOWERS.toString(), person, owner);
+		if(oldURI.endsWith("human.jsp"))
+			response.sendRedirect("/Social/id" + follow);
+		else
+			response.sendRedirect(oldURI);
 	}
 	
 	protected void keepHumanAsFollower(HttpServletRequest request,
-			HttpServletResponse response, String keepAsFollower) 
+			HttpServletResponse response, String keepAsFollower, String oldURI) 
 					 				throws ServletException, IOException {
 		long personId = Long.valueOf(keepAsFollower);
 		Person person = es.getPersonById(personId);
 		HttpSession session = request.getSession(false);
 		Person owner = es.getPersonById( (long) session.getAttribute(Links.PERSON_ID) );
 		
-		removePersonFromCircle(RelationType.REQUESTED, owner, person);
-		removePersonFromCircle(RelationType.MYREQUESTS, person, owner);
+		removePersonFromCircle(RelationType.REQUESTED.toString(), owner, person);
+		removePersonFromCircle(RelationType.MYREQUESTS.toString(), person, owner);
 		
-		removePersonFromCircle(RelationType.FRIENDS, owner, person);
-		removePersonFromCircle(RelationType.FRIENDS, person, owner);
+		removePersonFromCircle(RelationType.FRIENDS.toString(), owner, person);
+		removePersonFromCircle(RelationType.FRIENDS.toString(), person, owner);
 		
-		addPersonToCircle(RelationType.FOLLOWERS, owner, person);
-		addPersonToCircle(RelationType.IFOLLOW, person, owner);
-		
-		response.sendRedirect("/Social/id" + owner.getPersonId() + "/contacts");
+		addPersonToCircle(RelationType.FOLLOWERS.toString(), owner, person);
+		addPersonToCircle(RelationType.IFOLLOW.toString(), person, owner);
+		if(oldURI.endsWith("human.jsp"))
+			response.sendRedirect("/Social/id" + keepAsFollower);
+		else
+			response.sendRedirect(oldURI);
 	}
 	
 	protected void confirmRequest(HttpServletRequest request,
-			HttpServletResponse response, String confirmFriendRequest) 
+			HttpServletResponse response, String confirmFriendRequest, String oldURI) 
 					 				throws ServletException, IOException {
 		long newFriendId = Long.valueOf(confirmFriendRequest);
 		Person person = es.getPersonById(newFriendId);
 		HttpSession session = request.getSession(false);
 		Person owner = es.getPersonById( (long) session.getAttribute(Links.PERSON_ID) );
 		
-		removePersonFromCircle(RelationType.REQUESTED, owner, person);
-		addPersonToCircle(RelationType.FRIENDS, owner, person);
-		removePersonFromCircle(RelationType.MYREQUESTS, person, owner);
-		addPersonToCircle(RelationType.FRIENDS, person, owner);
+		removePersonFromCircle(RelationType.REQUESTED.toString(), owner, person);
+		removePersonFromCircle(RelationType.MYREQUESTS.toString(), person, owner);
 		
-		response.sendRedirect("/Social/id" + owner.getPersonId() + "/contacts");
+		removePersonFromCircle(RelationType.FOLLOWERS.toString(), owner, person);
+		removePersonFromCircle(RelationType.IFOLLOW.toString(), person, owner);
+		
+		addPersonToCircle(RelationType.FRIENDS.toString(), owner, person);
+		addPersonToCircle(RelationType.FRIENDS.toString(), person, owner);
+		if(oldURI.endsWith("human.jsp"))
+			response.sendRedirect("/Social/id" + confirmFriendRequest);
+		else
+			response.sendRedirect(oldURI);
 	}
 	
-	private void addPersonToCircle(RelationType relationType, Person owner, Person person){
-		try {
-			InitialContext initialContext = new InitialContext();
-			
-			@SuppressWarnings("unchecked")
-			GenericManager<AccessCircle> circle = 
-					(GenericManager<AccessCircle>) initialContext.lookup("java:comp/env/GenericManager");
-			circle.setEntity(es.getCircle(
-					relationType.toString(), owner));
-			circle.getEntity().addPerson(person);
-			circle.save();
-
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
+	private void addPersonToCircle(String circleName, Person owner, Person person){
+		GenericManager<AccessCircle> circleManager = AccessHelper.getGenericManager();
+		circleManager.setEntity( es.getCircle(circleName, owner) );
+		circleManager.getEntity().addPerson(person);
+		circleManager.save();
 	}
 	
-	private void removePersonFromCircle(RelationType relationType, Person owner, Person person){
-		try {
-			InitialContext initialContext = new InitialContext();
-			
-			@SuppressWarnings("unchecked")
-			GenericManager<AccessCircle> circle = 
-					(GenericManager<AccessCircle>) initialContext.lookup("java:comp/env/GenericManager");
-			circle.setEntity(es.getCircle(
-					relationType.toString(), owner));
-			circle.getEntity().getPersons().remove(person);
-			circle.save();
-
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
+	private void removePersonFromCircle(String circleName, Person owner, Person person){
+		GenericManager<AccessCircle> circleManager = AccessHelper.getGenericManager();
+		circleManager.setEntity( es.getCircle(circleName, owner) );
+		circleManager.getEntity().getPersons().remove(person);
+		circleManager.save();
 	}
 	
 	protected void sendFriendRequest(HttpServletRequest request,
-			HttpServletResponse response, String friendRequest) throws ServletException, IOException{
+			HttpServletResponse response, String friendRequest, String oldURI) throws ServletException, IOException{
 		long consumerId = Long.valueOf(friendRequest);
 		Person person = es.getPersonById(consumerId);
 		HttpSession session = request.getSession(false);
 		Person owner = es.getPersonById( (long) session.getAttribute(Links.PERSON_ID) );
-		addPersonToCircle(RelationType.MYREQUESTS, owner, person);
-		addPersonToCircle(RelationType.REQUESTED, person, owner);
-
-		response.sendRedirect("id" + consumerId);
+		addPersonToCircle(RelationType.MYREQUESTS.toString(), owner, person);
+		addPersonToCircle(RelationType.REQUESTED.toString(), person, owner);
+		if(oldURI.endsWith("human.jsp"))
+			response.sendRedirect("/Social/id" + friendRequest);
+		else
+			response.sendRedirect(oldURI);
 	}
 	
 	protected void dispatch(HttpServletRequest request,
