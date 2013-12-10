@@ -51,19 +51,19 @@ public class FrontController extends HttpServlet {
 		String confirmFriendRequest = request.getParameter("confirmFriendRequest");
 		String keepAsFollower = request.getParameter("keepAsFollower");
 		String follow = request.getParameter("follow");
-		String personID = request.getParameter("personID");
-		String circleID = request.getParameter("circleID");
 
 		if (request.getAttribute(Links.PERSON_ID) != null) {
 			dispatch(request, response, Links.PERSON_ID, "human.jsp");
 		}else
 			
 		if (request.getAttribute(Links.PERSON_FRIENDS_ID) != null) {
-			dispatch(request, response, Links.PERSON_FRIENDS_ID, "contacts.jsp");
+			System.err.println("person_friends_id when???");
+//			dispatch(request, response, Links.PERSON_FRIENDS_ID, "contacts.jsp");
 		}else
 			
 		if(request.getAttribute(Links.PERSON_CIRCLES_ID) != null){
-			dispatch(request, response, Links.PERSON_CIRCLES_ID, "friends_include/AccessCircles.jsp");
+			System.err.println("person_circle_id when???");
+//			dispatch(request, response, Links.PERSON_CIRCLES_ID, "friends_include/AccessCircles.jsp");
 		}else
 			
 		if ((email != null) && (password != null)) {
@@ -97,10 +97,6 @@ public class FrontController extends HttpServlet {
 			
 		if(keepAsFollower != null){
 			keepHumanAsFollower(request, response, keepAsFollower);
-		}else
-			
-		if(personID != null && circleID != null){
-			//TODO
 		}else
 			
 		if (request.getSession(false) == null) {

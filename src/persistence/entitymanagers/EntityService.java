@@ -12,4 +12,5 @@ public interface EntityService {
 	Person singPersonIn(String email, String password);
 	boolean isEmailExist(String email);
 	AccessCircle getCircle(String name, Person person);
+	AccessCircle getCircle(long circleID);
 }

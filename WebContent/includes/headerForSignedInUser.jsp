@@ -10,8 +10,7 @@
 			.getSessionPersonId(request.getSession(false)) %>">My page</a>
 		</td>
 		<td width="80">
-			<a href="/Social/id<%=Helper
-			.getSessionPersonId(request.getSession(false)) %>/contacts">Contacts</a>
+			<a href="/Social/contacts">Contacts</a>
 		</td>
 		<td width="120">Conversations</td>
 		<td width="70">Photos</td>

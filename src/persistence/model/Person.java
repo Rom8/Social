@@ -3,7 +3,6 @@ package persistence.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -39,7 +38,7 @@ import persistence.model.AccessCircle;;
 	@NamedQuery(name="Person.isEmailExist",
 				query="SELECT p.email FROM Person p WHERE p.email = :email")
 })
-public class Person implements Serializable {
+public class Person implements Comparable<Person>, Serializable {
 	private static final long serialVersionUID = 1L;
 	private long personId;
 	private Date birthday;
@@ -223,5 +222,10 @@ public class Person implements Serializable {
 	@Override
 	public int hashCode() {
 		return (int) this.personId;
+	}
+
+	@Override
+	public int compareTo(Person person) {
+		return this.firstName.compareTo(person.getFirstName());
 	}
 }

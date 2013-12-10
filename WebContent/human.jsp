@@ -28,7 +28,7 @@ Person person = (Person) request.getAttribute(Links.PERSON);
 			<td>
 				<table>
 					<tr>
-						<td><a href= 'id<%= person.getPersonId() %>/contacts' > Contacts </a></td>
+						<td><a href="/Social/contacts"> Contacts </a></td>
 					</tr>
 					<tr>
 						<td>Messages</td>

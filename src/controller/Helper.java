@@ -105,6 +105,31 @@ public class Helper {
 		}
 	}
 	
+	public static AccessCircle getCircle(long circleID){
+		InitialContext context;
+		try {
+			context = new InitialContext();
+			EntityService es = (EntityService) context.lookup("java:comp/env/EntityService");
+			return es.getCircle(circleID);
+		} catch (NamingException e) {
+			System.out.println("Naming Exception in Helper.getCircle");
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static Person getPersonByID(long personID){
+		InitialContext context;
+		try {
+			context = new InitialContext();
+			EntityService es = (EntityService) context.lookup("java:comp/env/EntityService");
+			return es.getPersonById(personID);
+		} catch (NamingException e) {
+			System.out.println("Naming Exception in Helper.getPersonByID");
+			e.printStackTrace();
+			return null;
+		}
+	}
 /*	
 	//returns a "html list" of friends of one type
 	public static String friendsColumnType(Person person, String relationType){

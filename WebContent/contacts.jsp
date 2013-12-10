@@ -14,30 +14,21 @@
 <%@page	import="persistence.model.Person" %>
 <%@page	contentType="text/html; charset=ISO-8859-1" %>
 <%@page pageEncoding="ISO-8859-1"%>
-<%@ page session="false" %>
-<%
-Person person = (Person) request.getAttribute(Links.PERSON);
-%>
+<%@ include file="contacts/include.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>SN - <%=person.getFirstName() %>'s friends</title>
+<title>SN - <%=person.getFirstName() %>'s contacts</title>
 </head>
 <table border="1" cellspacing="15" frame="void">
 		<tr>
-			<td bgcolor="#2E64FE">
-				<%=JSPHelper.getButton("Friends", "personID", String.valueOf(person.getPersonId()),
-				"circleID", person.getAccessCircleByName(RelationType.FRIENDS.toString()).getName())
-				%>
-			</td>
-			<td bgcolor="#D7DF01">Requests</td>
-			<td bgcolor="#7401DF">My requests</td>
-		</tr>
-		<tr>
-			<td bgcolor="#0080FF">Followers</td>
-			<td bgcolor="#BCF5A9">I Follow</td>
-			<td bgcolor="#DF0101">Banned</td>
+			<td><a href="/Social/contacts/friends.jsp">Friends</a></td>
+			<td><a href="/Social/contacts/requests.jsp">Friend requests</a></td>
+			<td><a href="/Social/contacts/myrequests.jsp">My requests</a></td>
+			<td><a href="/Social/contacts/followers.jsp">Followers</a></td>
+			<td><a href="/Social/contacts/ifollow.jsp">I follow</a></td>
+			<td><a href="/Social/contacts/banned.jsp">Banned</a></td>
 		</tr>
 		<tr>
 			<td colspan="3"><a href="/Social/id<%=person.getPersonId() %>/circles">Circles...</a></td>

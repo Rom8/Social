@@ -86,4 +86,8 @@ public class EntityServiceBean implements EntityService {
 		}
 	}
 	
+	public AccessCircle getCircle(long circleID){
+		return em.find(AccessCircle.class, circleID);
+	}
+	
 }
