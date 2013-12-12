@@ -223,7 +223,7 @@ public class FrontController extends HttpServlet {
 			synchronized (session) {
 				session.setAttribute(Links.PERSON_ID, Long.valueOf(person.getPersonId()));
 			}
-			Helper.redirectSingedInToMyPage(request, response);
+			Helper.redirectSingedInToMyPage(session, response);
 		} else
 			response.sendRedirect(
 					"signin.jsp?signNew=Combination+of+such+email+and+password+was+not+found.");

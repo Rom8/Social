@@ -5,12 +5,10 @@
 <%@ page import="persistence.model.Person" %>
 <%@ page import="controller.Links" %>
 <%@ page import="controller.Helper" %>
-<%@ page session="false" %>
 
 <%
 Person p = (Person) request.getAttribute(Links.PERSON);
-HttpSession session = request.getSession(false);
-if(session == null){
+if(session.getAttribute(Links.PERSON_ID.toString()) == null){
 %>
 	Please, <a href="signin.jsp">sign in</a> if you want to contact with <%=p.getFirstName() %>
 <% 

@@ -16,10 +16,9 @@ import persistence.model.RelationType;
 
 public class Helper {
 	
- 	public static void redirectSingedInToMyPage(HttpServletRequest request,
+ 	public static void redirectSingedInToMyPage(HttpSession session,
 			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
+		if (session.getAttribute(Links.PERSON_ID.toString()) != null) {
 			long personId = (Long) session.getAttribute(Links.PERSON_ID);
 			String location = String.valueOf(personId);
 			response.sendRedirect("id" + location);

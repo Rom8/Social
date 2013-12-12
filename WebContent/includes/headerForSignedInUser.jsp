@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="controller.Helper" %>
-<%@ page session="false" %>
 <header>
 <table align="center" bgcolor="silver">
 	<tr>
 		<td width="80">
 			<a href="/Social/id<%=Helper
-			.getSessionPersonId(request.getSession(false)) %>">My page</a>
+			.getSessionPersonId(session) %>">My page</a>
 		</td>
 		<td width="80">
 			<a href="/Social/contacts">Contacts</a>
