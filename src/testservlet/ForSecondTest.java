@@ -174,7 +174,13 @@ public class ForSecondTest extends HttpServlet {
 //		p.setMiddleName("Unknown2");
 //		mng.save();
 		
-		
+//		Person andrew = es.getPersonById(165);
+//		
+//		GenericManager<Person> mng = AccessHelper.getGenericManager();
+//		mng.setEntity(es.getPersonById(166));
+//		Person p = mng.getEntity();
+//		p.addAccessCircle(new AccessCircle("Roommates")).addPerson(andrew);
+//		mng.save();
 		
 		out.println("nothing");
 		out.println("</body>");

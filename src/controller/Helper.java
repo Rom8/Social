@@ -129,6 +129,18 @@ public class Helper {
 			return null;
 		}
 	}
+	
+	public static EntityService getEntityService(){
+		InitialContext context;
+		try {
+			context = new InitialContext();
+			return (EntityService) context.lookup("java:comp/env/EntityService");
+		} catch (NamingException e) {
+			System.err.println("Naming Exception in Helper.getEntityService");
+			e.printStackTrace();
+			return null;
+		}
+	}
 /*	
 	//returns a "html list" of friends of one type
 	public static String friendsColumnType(Person person, String relationType){

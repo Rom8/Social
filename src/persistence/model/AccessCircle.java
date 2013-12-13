@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -18,7 +19,13 @@ import java.util.Set;
 	@NamedQuery(name="AccessCircle.findAll", 
 				query="SELECT a FROM AccessCircle a"),
 	@NamedQuery(name="AccessCircle.findByNameAndPerson",
-				query="SELECT a FROM AccessCircle a WHERE a.name = :name AND a.person = :person")
+				query="SELECT a FROM AccessCircle a WHERE a.name = :name AND a.person = :person"),
+	@NamedQuery(name="AccessCircle.findAllCirclesWith",
+				query="SELECT ac						" +
+					  "FROM AccessCircle ac				" +
+					  "	 inner join ac.persons ps		" +
+					  "WHERE ac.person = :owner AND		" +
+					  "ps = :person                   	")
 })
 public class AccessCircle implements Serializable {
 	private static final long serialVersionUID = 12L;
@@ -27,7 +34,7 @@ public class AccessCircle implements Serializable {
 	private byte enabled;
 	private String name;
 	private Person person;
-	private Set<Person> persons;
+	private Set<Person> persons = new HashSet<Person>();
 
 	public AccessCircle() {
 	}

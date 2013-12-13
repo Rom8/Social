@@ -1,5 +1,7 @@
 package persistence.entitymanagers;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
@@ -11,7 +13,9 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpSession;
 
+import controller.Links;
 import persistence.model.AccessCircle;
 import persistence.model.Person;
 import persistence.model.RelationType;
@@ -64,6 +68,11 @@ public class EntityServiceBean implements EntityService {
 		}
 	}
 	
+	public Person getOwner(HttpSession session){
+		long id = Long.parseLong( session.getAttribute(Links.PERSON_ID).toString() );
+		return em.find(Person.class, id);
+	}
+	
 	public boolean isEmailExist(String email){
 		try{
 			em.createNamedQuery("Person.isEmailExist", String.class)
@@ -88,6 +97,13 @@ public class EntityServiceBean implements EntityService {
 	
 	public AccessCircle getCircle(long circleID){
 		return em.find(AccessCircle.class, circleID);
+	}
+	
+	public List<AccessCircle> getCircles(Person owner, Person person){
+		return em.createNamedQuery("AccessCircle.findAllCirclesWith", AccessCircle.class)
+				.setParameter("owner", owner)
+				.setParameter("person", person)
+				.getResultList();
 	}
 	
 }
