@@ -139,19 +139,19 @@ public class Person implements Comparable<Person>, Serializable {
 		this.middleName = middleName;
 	}
 	
-	public int getHash() {
+	protected int getHash() {
 		return hash;
 	}
 	
-	public void setHash(int hash) {
+	protected void setHash(int hash) {
 		this.hash = hash;
 	}
 	
-	public int getSalt() {
+	protected int getSalt() {
 		return salt;
 	}
 	
-	public void setSalt(int salt) {
+	protected void setSalt(int salt) {
 		this.salt = salt;
 	}
 	
