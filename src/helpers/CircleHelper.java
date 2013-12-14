@@ -78,10 +78,28 @@ public class CircleHelper {
 				}
 				break;
 			case LOVER:
+				for(Person p: persons){
+					result += printPersonRef(p)
+							+ JSPHelper
+								.getButton(HttpMethodType.GET, "Divorce",
+										"divorce", String.valueOf(p.getPersonId()),
+										"oldURI", URI
+										);
+				//TODO
+				}
 				break;
 			case BANNED:
+				for(Person p: persons){
+					result += printPersonRef(p)
+							+ JSPHelper
+								.getButton(HttpMethodType.GET, "Unban",
+										"unban", String.valueOf(p.getPersonId()),
+										"oldURI", URI
+										);
+				}
 				break;
 			default:
+				//TODO
 				break;
 		}
 		return result;

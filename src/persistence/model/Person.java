@@ -47,7 +47,6 @@ public class Person implements Comparable<Person>, Serializable {
 	private String hometown;
 	private String lastName;
 	private String middleName;
-	private String password;
 	private int hash;
 	private int salt;
 	private Set<AccessCircle> accessCircles = new HashSet<AccessCircle>();
@@ -139,15 +138,6 @@ public class Person implements Comparable<Person>, Serializable {
 	public void setMiddleName(String middleName) {
 		this.middleName = middleName;
 	}
-
-//	@Size(min=6, max=22)
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	
 	public int getHash() {
 		return hash;
@@ -197,7 +187,7 @@ public class Person implements Comparable<Person>, Serializable {
 		return accessCircle;
 	}
 	
-	private void createPass(String password){
+	public void createPass(String password){
 		Random random = new Random();
 		this.salt = random.nextInt();
 		this.hash = (this.salt + password).hashCode();

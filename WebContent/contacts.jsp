@@ -20,6 +20,7 @@ Person owner = es.getOwner(session);
 			<td><a href="/Social/contacts/circle.jsp?circleName=MYREQUESTS">My requests</a></td>
 			<td><a href="/Social/contacts/circle.jsp?circleName=FOLLOWERS">Follower</a></td>
 			<td><a href="/Social/contacts/circle.jsp?circleName=IFOLLOW">I follow</a></td>
+			<td><a href="/Social/contacts/circle.jsp?circleName=BANNED">Banned</a></td>
 		</tr>
 </table>
 </html>

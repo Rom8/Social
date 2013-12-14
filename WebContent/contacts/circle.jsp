@@ -18,7 +18,7 @@ AccessCircle circle = es.getCircle(circleName, owner);
 <title><%= circle.getName() %></title>
 </head>
 <body>
-My <%=circle.getName() %> circle <br>
+My "<%=circle.getName() %>" circle <br>
 <%= CircleHelper.printCircle(circle, request.getRequestURI()) %>
 </body>
 </html>
