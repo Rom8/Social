@@ -21,7 +21,7 @@
 </head>
 <body>
 	<jsp:include page="includes/header.jsp"></jsp:include>
-	<%@ include file="RelationStatus.jsp"%>
+	<jsp:include page="RelationStatus.jsp"></jsp:include>
 
 	<table>
 		<tr>

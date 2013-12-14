@@ -7,7 +7,7 @@ import java.util.List;
 public class JSPHelper {
 	
 	private static final String BEGIN = 
-			" <form action=\"/Social/FrontController\" method=\"post\"> "; 
+			" <form action=\"/Social/FrontController\" method=\"";
 	
 	private static String end(String buttonValue){
 		return
@@ -17,30 +17,30 @@ public class JSPHelper {
 	}
 	
 	private static String nameAndValue(String name, String value){
-		return  "		<input type=\"hidden\"				" +
-				"			   name=\"" + name + "\"		" +
-				"			   value=\"" + value + "\" >	";
+		return  "<input type=\"hidden\"  " +
+				"name=\"" + name + "\"		" +
+				"value=\"" + value + "\" >	";
 	}
 	
 	public static String getButton(
-			String buttonValue,
+			HttpMethodType method, String buttonValue,
 			String name1, String value1) {
-		return BEGIN + nameAndValue(name1, value1) + end(buttonValue);
+		return BEGIN + method.toString() + "\">" + nameAndValue(name1, value1) + end(buttonValue);
 	}
 	
 	public static String getButton(
-			String buttonValue,
+			HttpMethodType method, String buttonValue,
 			String name1, String value1, 
 			String name2, String value2) {
 		return 
-				BEGIN + 
+				BEGIN + method.toString() + "\">" +
 				nameAndValue(name1, value1) + 
 				nameAndValue(name2, value2) +
 				end(buttonValue);
 	}
 	
 	public static String getButton(
-			String buttonValue,
+			HttpMethodType method, String buttonValue,
 			String name1, String value1,
 			String name2, String value2,
 			String... namesValues){
@@ -53,7 +53,7 @@ public class JSPHelper {
 				others += nameAndValue(i.next(), i.next());
 			}
 			return
-					BEGIN + 
+					BEGIN + method.toString() + "\">" +
 					nameAndValue(name1, value1) +
 					nameAndValue(name2, value2) +
 					others +

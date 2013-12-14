@@ -52,6 +52,7 @@ public class FrontController extends HttpServlet {
 		String keepAsFollower = request.getParameter("keepAsFollower");
 		String follow = request.getParameter("follow");
 		String unfollow = request.getParameter("unfollow");
+		String cancelFriendRequest = request.getParameter("cancelFriendRequest");
 
 		if (request.getAttribute(Links.PERSON_ID) != null) {
 			dispatch(request, response, Links.PERSON_ID, "human.jsp");
@@ -94,10 +95,30 @@ public class FrontController extends HttpServlet {
 			keepHumanAsFollower(request, response, keepAsFollower, oldURI);
 		}else
 			
-		if (request.getSession(false) == null) {
+		if(cancelFriendRequest != null){
+			cancelFriendRequest(request, response, cancelFriendRequest, oldURI);
+		}else
+			
+		if (request.getSession().getAttribute(Links.PERSON_ID) == null) {
 			response.sendRedirect("welcome.jsp");
 		}else response.sendRedirect("id" + 
-			((long)request.getSession(false).getAttribute(Links.PERSON_ID)));
+			((long)request.getSession().getAttribute(Links.PERSON_ID)));
+	}
+	
+	protected void cancelFriendRequest(HttpServletRequest request,
+			HttpServletResponse response, String cancelFriendRequest, String oldURI)
+					throws ServletException, IOException {
+		long personId = Long.valueOf(cancelFriendRequest);
+		Person person = es.getPersonById(personId);
+		HttpSession session = request.getSession(false);
+		Person owner = es.getPersonById( (long) session.getAttribute(Links.PERSON_ID) );
+		
+		removePersonFromCircle(RelationType.MYREQUESTS.toString(), owner, person);
+		removePersonFromCircle(RelationType.REQUESTED.toString(), person, owner);
+		if(oldURI.endsWith("human.jsp"))
+			response.sendRedirect("/Social/id" + cancelFriendRequest);
+		else
+			response.sendRedirect(oldURI);
 	}
 	
 	protected void unfollowPerson(HttpServletRequest request,

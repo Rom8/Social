@@ -1,3 +1,4 @@
+<%@page import="helpers.HttpMethodType"%>
 <%@page import="persistence.model.AccessCircle"%>
 <%@page import="java.util.List"%>
 <%@page import="helpers.JSPHelper"%>
@@ -58,10 +59,10 @@ if(session.getAttribute(Links.PERSON_ID) == null){
 
 if(flaq && !p.equals(Helper.getEntityService().getOwner(session))){
 %>
-<%= JSPHelper.getButton("Send Friend Request",
+<%= JSPHelper.getButton(HttpMethodType.POST, "Send Friend Request",
 						"friendRequest", String.valueOf(p.getPersonId()),
 						"oldURI", request.getRequestURI())  %>
-<%= JSPHelper.getButton("Follow",
+<%= JSPHelper.getButton(HttpMethodType.POST, "Follow",
 						"follow", String.valueOf(p.getPersonId()),
 						"oldURI", request.getRequestURI())  %>
 <%
