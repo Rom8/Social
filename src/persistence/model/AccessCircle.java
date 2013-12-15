@@ -112,10 +112,6 @@ public class AccessCircle implements Serializable {
 		}
 	}
 	
-//	public boolean movePersonToCircle(Person person, AccessCircle circle){
-//		return this.persons.remove(person) && circle.addPerson(person);
-//	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
