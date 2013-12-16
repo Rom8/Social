@@ -55,6 +55,9 @@ if(session.getAttribute(Links.PERSON_ID) == null){
 			out.println(p.getFirstName() + " is also consists in your " + ac.getName());
 		}
 	}
+	%>
+<br><a href="/Social/contacts/mutual.jsp?mutual=<%=p.getPersonId() %>">Mutual friends</a>
+<%
 }
 
 if(flaq && !p.equals(Helper.getEntityService().getOwner(session))){
@@ -65,6 +68,7 @@ if(flaq && !p.equals(Helper.getEntityService().getOwner(session))){
 <%= JSPHelper.getButton(HttpMethodType.POST, "Follow",
 						"follow", String.valueOf(p.getPersonId()),
 						"oldURI", request.getRequestURI())  %>
+<br><a href="/Social/contacts/mutual.jsp?mutual=<%=p.getPersonId() %>">Mutual friends</a>
 <%
 }
 %>

@@ -24,6 +24,8 @@ for(AccessCircle ac: circleList){
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SN - <%=owner.getFirstName() %>'s contacts</title>
 </head>
+<body>
+<jsp:include page="includes/header.jsp"></jsp:include>
 <table border="1" cellspacing="15" frame="void">
 		<tr>
 			<td><a href="/Social/contacts/circle.jsp?circleName=FRIENDS">
@@ -40,4 +42,5 @@ for(AccessCircle ac: circleList){
 			Banned(<%=circleSizeMap.get(RelationType.BANNED.toString()).intValue() %>)</a></td>
 		</tr>
 </table>
+</body>
 </html>

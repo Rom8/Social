@@ -18,7 +18,9 @@ AccessCircle circle = es.getCircle(circleName, owner);
 <title><%= circle.getName() %></title>
 </head>
 <body>
+<jsp:include page="/includes/header.jsp"></jsp:include>
 My "<%=circle.getName() %>" circle <br>
-<%= CircleHelper.printCircle(circle, request.getRequestURI()) %>
+<%= CircleHelper.printCircle(circle, request.getRequestURI()
+								+ "?circleName=" + circle.getName()) %>
 </body>
 </html>

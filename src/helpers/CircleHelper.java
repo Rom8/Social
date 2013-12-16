@@ -26,7 +26,7 @@ public class CircleHelper {
 				for(Person p: persons){
 					result += printPersonRef(p)
 							+ JSPHelper
-								.getButton(HttpMethodType.GET, "Keep as follower", 
+								.getButton(HttpMethodType.POST, "Keep as follower", 
 										"keepAsFollower", String.valueOf(p.getPersonId()),
 										"oldURI", URI
 										);
@@ -36,7 +36,7 @@ public class CircleHelper {
 				for(Person p: persons){
 					result += printPersonRef(p)
 							+ JSPHelper
-								.getButton(HttpMethodType.GET, "Cancel friend request",
+								.getButton(HttpMethodType.POST, "Cancel friend request",
 										"cancelFriendRequest", String.valueOf(p.getPersonId()),
 										"oldURI", URI
 										);
@@ -46,12 +46,12 @@ public class CircleHelper {
 				for(Person p: persons){
 					result += printPersonRef(p)
 							+ JSPHelper
-								.getButton(HttpMethodType.GET, "Confirm friend request", 
+								.getButton(HttpMethodType.POST, "Confirm friend request", 
 										"confirmFriendRequest", String.valueOf(p.getPersonId()),
 										"oldURI", URI
 										)
 							+ JSPHelper
-								.getButton(HttpMethodType.GET, "Keep as follower", 
+								.getButton(HttpMethodType.POST, "Keep as follower", 
 										"keepAsFollower", String.valueOf(p.getPersonId()),
 										"oldURI", URI
 										);
@@ -61,7 +61,7 @@ public class CircleHelper {
 				for(Person p: persons){
 					result += printPersonRef(p)
 							+ JSPHelper
-								.getButton(HttpMethodType.GET, "Confirm friend request", 
+								.getButton(HttpMethodType.POST, "Confirm friend request", 
 										"confirmFriendRequest", String.valueOf(p.getPersonId()),
 										"oldURI", URI
 										);
@@ -71,7 +71,7 @@ public class CircleHelper {
 				for(Person p: persons){
 					result += printPersonRef(p)
 							+ JSPHelper
-								.getButton(HttpMethodType.GET, "Unfollow",
+								.getButton(HttpMethodType.POST, "Unfollow",
 										"unfollow", String.valueOf(p.getPersonId()),
 										"oldURI", URI
 										);
@@ -81,7 +81,7 @@ public class CircleHelper {
 				for(Person p: persons){
 					result += printPersonRef(p)
 							+ JSPHelper
-								.getButton(HttpMethodType.GET, "Divorce",
+								.getButton(HttpMethodType.POST, "Divorce",
 										"divorce", String.valueOf(p.getPersonId()),
 										"oldURI", URI
 										);
@@ -92,7 +92,7 @@ public class CircleHelper {
 				for(Person p: persons){
 					result += printPersonRef(p)
 							+ JSPHelper
-								.getButton(HttpMethodType.GET, "Unban",
+								.getButton(HttpMethodType.POST, "Unban",
 										"unban", String.valueOf(p.getPersonId()),
 										"oldURI", URI
 										);
