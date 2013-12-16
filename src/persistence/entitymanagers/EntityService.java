@@ -14,6 +14,7 @@ public interface EntityService {
 	Person getPersonById(long personId);
 	Person singPersonIn(String email, String password);
 	Person getOwner(HttpSession session);
+	List<Person> getMutualfriends(Person owner, Person person);
 	boolean isEmailExist(String email);
 	AccessCircle getCircle(String name, Person person);
 	AccessCircle getCircle(long circleID);

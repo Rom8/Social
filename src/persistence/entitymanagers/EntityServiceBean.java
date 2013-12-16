@@ -1,6 +1,9 @@
 package persistence.entitymanagers;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -71,6 +74,17 @@ public class EntityServiceBean implements EntityService {
 	public Person getOwner(HttpSession session){
 		long id = Long.parseLong( session.getAttribute(Links.PERSON_ID).toString() );
 		return em.find(Person.class, id);
+	}
+	
+	public List<Person> getMutualfriends(Person owner, Person person){
+		Set<Person> ownerFriends = owner
+				.getAccessCircleByName(RelationType.FRIENDS.toString()).getPersons();
+		Set<Person> personFriends = person
+				.getAccessCircleByName(RelationType.FRIENDS.toString()).getPersons();
+		ownerFriends.retainAll(personFriends);
+		List<Person> mutualFriends = new ArrayList<>(ownerFriends);
+		Collections.sort(mutualFriends);
+		return mutualFriends;
 	}
 	
 	public boolean isEmailExist(String email){
