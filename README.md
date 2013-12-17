@@ -23,6 +23,8 @@ It is based on Oracle database and WebLogic server. Written on java ee 7.
 	Read readme.txt file inside WebLogic install folder.  
 	(You need to create at least one domain. Do not forget to set system variable MW_HOME)
 6. Now, you need to configure JDBC Data Source.  
+	* You need to start WebLogic server. To start admin server, launch  
+	user_projects\domains\\\<domain_name>\bin\startWeblogic.cmd
 	* Open your browser and go to http://localhost:7001/console, use name and password you set in the previous item.
 	* Go to Services => Data Sources. Press New => Generic Data Source  
 	* Give name to your JDBC Data Source (e.g., JDBC Data Source Social)	
@@ -42,7 +44,9 @@ It is based on Oracle database and WebLogic server. Written on java ee 7.
 		You are in Test Database Connection. Check your configuration by clicking on "Test Configuration".  
 	* Click on Next. You are in Select Targets.
 		Select admin server. You can additionally select other servers.  
+	* Click on Finish.
 7. Now, environment is ready.  
-	The easiest way to deploy project is to copy SocialEAR.ear to \user_projects\domains\<domain_name>\autodeploy  
+	The easiest way to deploy project is to copy SocialEAR.ear to \user_projects\domains\\\<domain_name>\autodeploy  
 	Or, open IDE and deploy project, using src files.  
 	"Social" - is *Dynamic Web Project* with activated JPA 2.0 facet.  
+8. To open homepage of the project, go to http://localhost:7001/Social
