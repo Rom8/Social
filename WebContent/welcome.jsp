@@ -1,4 +1,3 @@
-<%@page import="javax.jms.Session"%>
 <%@page import="controller.Helper"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>

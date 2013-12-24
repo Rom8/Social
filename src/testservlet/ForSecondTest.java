@@ -183,6 +183,12 @@ public class ForSecondTest extends HttpServlet {
 //		p.addAccessCircle(new AccessCircle("Roommates")).addPerson(andrew);
 //		mng.save();
 		
+//		RelationStatus rs;
+//		rs = new OwnerSide(request.getSession(), es.getPersonById(1));
+//		rs = new PersonSide(request.getSession(), es.getPersonById(1));
+		
+//		String s = RelationType.FOLLOWERS.nameLine();
+		
 		out.println("nothing");
 		out.println("</body>");
 		out.println("</html>");
