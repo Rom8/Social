@@ -3,7 +3,6 @@
 <%@page import="java.util.Set"%>
 <%@page import="persistence.model.AccessCircle"%>
 <%@page import="persistence.model.RelationType"%>
-<%@page import="controller.Links"%>
 <%@page import="persistence.model.Person"%>
 <%@page import="controller.Helper"%>
 <%@page import="persistence.entitymanagers.EntityService"%>
@@ -28,18 +27,42 @@ for(AccessCircle ac: circleList){
 <jsp:include page="includes/header.jsp"></jsp:include>
 <table border="1" cellspacing="15" frame="void">
 		<tr>
-			<td><a href="/Social/contacts/circle.jsp?circleName=FRIENDS">
-			Friends(<%=circleSizeMap.get(RelationType.FRIENDS.toString()).intValue() %>)</a></td>
-			<td><a href="/Social/contacts/circle.jsp?circleName=REQUESTED">
-			Requests(<%=circleSizeMap.get(RelationType.REQUESTED.toString()).intValue() %>)</a></td>
-			<td><a href="/Social/contacts/circle.jsp?circleName=MYREQUESTS">
-			My requests(<%=circleSizeMap.get(RelationType.MYREQUESTS.toString()).intValue() %>)</a></td>			
-			<td><a href="/Social/contacts/circle.jsp?circleName=FOLLOWERS">
-			Follower(<%=circleSizeMap.get(RelationType.FOLLOWERS.toString()).intValue() %>)</a></td>
-			<td><a href="/Social/contacts/circle.jsp?circleName=IFOLLOW">
-			I follow(<%=circleSizeMap.get(RelationType.IFOLLOW.toString()).intValue() %>)</a></td>
-			<td><a href="/Social/contacts/circle.jsp?circleName=BANNED">
-			Banned(<%=circleSizeMap.get(RelationType.BANNED.toString()).intValue() %>)</a></td>
+			<td>
+				<a href="/Social/contacts/circle.jsp?circleName=FRIENDS">
+					<%=RelationType.FRIENDS.nameLine() %>
+					(<%=circleSizeMap.get(RelationType.FRIENDS.toString()).intValue() %>)
+				</a>
+			</td>
+			<td>
+				<a href="/Social/contacts/circle.jsp?circleName=REQUESTED">
+					<%=RelationType.REQUESTED.nameLine() %>
+					(<%=circleSizeMap.get(RelationType.REQUESTED.toString()).intValue() %>)
+				</a>
+			</td>
+			<td>
+				<a href="/Social/contacts/circle.jsp?circleName=MYREQUESTS">
+					<%=RelationType.MYREQUESTS.nameLine() %>
+					(<%=circleSizeMap.get(RelationType.MYREQUESTS.toString()).intValue() %>)
+				</a>
+			</td>
+			<td>
+				<a href="/Social/contacts/circle.jsp?circleName=FOLLOWERS">
+					<%=RelationType.FOLLOWERS.nameLine() %>
+					(<%=circleSizeMap.get(RelationType.FOLLOWERS.toString()).intValue() %>)
+				</a>
+			</td>
+			<td>
+				<a href="/Social/contacts/circle.jsp?circleName=IFOLLOW">
+					<%=RelationType.IFOLLOW.nameLine() %>
+					(<%=circleSizeMap.get(RelationType.IFOLLOW.toString()).intValue() %>)
+				</a>
+			</td>
+			<td>
+				<a href="/Social/contacts/circle.jsp?circleName=BANNED">
+					<%=RelationType.BANNED.nameLine() %>
+					(<%=circleSizeMap.get(RelationType.BANNED.toString()).intValue() %>)
+				</a>
+			</td>
 		</tr>
 </table>
 </body>

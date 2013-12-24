@@ -25,77 +25,44 @@ public class CircleHelper {
 			case FRIENDS:
 				for(Person p: persons){
 					result += printPersonRef(p)
-							+ JSPHelper
-								.getButton(HttpMethodType.POST, "Keep as follower", 
-										"keepAsFollower", String.valueOf(p.getPersonId()),
-										"oldURI", URI
-										);
+							+ RelationType.FRIENDS.getButtons(p, URI);
 				}
 				break;
 			case MYREQUESTS:
 				for(Person p: persons){
 					result += printPersonRef(p)
-							+ JSPHelper
-								.getButton(HttpMethodType.POST, "Cancel friend request",
-										"cancelFriendRequest", String.valueOf(p.getPersonId()),
-										"oldURI", URI
-										);
+							+ RelationType.MYREQUESTS.getButtons(p, URI);
 				}
 				break;
 			case REQUESTED:
 				for(Person p: persons){
 					result += printPersonRef(p)
-							+ JSPHelper
-								.getButton(HttpMethodType.POST, "Confirm friend request", 
-										"confirmFriendRequest", String.valueOf(p.getPersonId()),
-										"oldURI", URI
-										)
-							+ JSPHelper
-								.getButton(HttpMethodType.POST, "Keep as follower", 
-										"keepAsFollower", String.valueOf(p.getPersonId()),
-										"oldURI", URI
-										);
+							+ RelationType.REQUESTED.getButtons(p, URI);
 				}
 				break;
 			case FOLLOWERS:
 				for(Person p: persons){
 					result += printPersonRef(p)
-							+ JSPHelper
-								.getButton(HttpMethodType.POST, "Confirm friend request", 
-										"confirmFriendRequest", String.valueOf(p.getPersonId()),
-										"oldURI", URI
-										);
+							+ RelationType.FOLLOWERS.getButtons(p, URI);
 				}
 				break;
 			case IFOLLOW:
 				for(Person p: persons){
 					result += printPersonRef(p)
-							+ JSPHelper
-								.getButton(HttpMethodType.POST, "Unfollow",
-										"unfollow", String.valueOf(p.getPersonId()),
-										"oldURI", URI
-										);
+							+ RelationType.IFOLLOW.getButtons(p, URI);
 				}
 				break;
 			case LOVER:
 				for(Person p: persons){
 					result += printPersonRef(p)
-							+ JSPHelper
-								.getButton(HttpMethodType.POST, "Divorce",
-										"divorce", String.valueOf(p.getPersonId()),
-										"oldURI", URI
-										);
-				//TODO
+							+ RelationType.LOVER.getButtons(p, URI);
+				//TODO add additional opportunities
 				}
 				break;
 			case BANNED:
 				for(Person p: persons){
 					result += printPersonRef(p)
-							+ JSPHelper
-								.getButton(HttpMethodType.POST, "Unban",
-										"unban", String.valueOf(p.getPersonId()),
-										"oldURI", URI
-										);
+							+ RelationType.BANNED.getButtons(p, URI);
 				}
 				break;
 			default:

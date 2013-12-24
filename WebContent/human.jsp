@@ -1,5 +1,8 @@
+<%@page import="persistence.model.RelationType"%>
+<%@page import="logic.relation.RelationStatus"%>
+<%@page import="persistence.entitymanagers.AccessHelper"%>
+<%@page import="persistence.entitymanagers.EntityService"%>
 <%@ page import="controller.Links"%>
-<%@ page import="controller.Helper "%>
 <%@ page import="java.util.Date"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -9,19 +12,33 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
 <%
-	if (request.getAttribute(Links.PERSON) == null) {
-		request.getRequestDispatcher("includes/PageDoesNotExist.jsp")
-				.forward(request, response);
-	} else {
-		Person person = (Person) request.getAttribute(Links.PERSON);
+	EntityService es = AccessHelper.getEntityService();
+	String personId = (String) request.getAttribute(Links.PERSON_ID);
+	Person person = es.getPersonById(Long.parseLong(personId));
+	if(person == null){
 %>
+	<title>SN - User with id <%=personId%> does not exist
+	</title>
+	</head>
+	<body>
+		<jsp:include page="includes/header.jsp"></jsp:include>
+		User with id <%=personId %> does not exist
+<%
+	}else{
+		RelationStatus relationStatus = new RelationStatus(session, person);
+		RelationType relationType = relationStatus.getRelationType();
+%>
+
+
 <title>SN - <%=person.getFirstName()%>
 </title>
 </head>
 <body>
 	<jsp:include page="includes/header.jsp"></jsp:include>
-	<jsp:include page="RelationStatus.jsp"></jsp:include>
+		<%=relationType.lineForPerson(person) %>
+		<%=relationType.getButtons(person, "/Social/id" + person.getPersonId()) %>
 
 	<table>
 		<tr>
@@ -57,8 +74,8 @@
 		</tr>
 	</table>
 
+<%
+}
+ %>
 </body>
 </html>
-<%
-	}
-%>

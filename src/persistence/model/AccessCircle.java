@@ -52,7 +52,7 @@ public class AccessCircle implements Serializable {
 		return this.circleId;
 	}
 
-	public void setCircleId(long circleId) {
+	private void setCircleId(long circleId) {
 		this.circleId = circleId;
 	}
 	
@@ -112,6 +112,10 @@ public class AccessCircle implements Serializable {
 		}
 	}
 	
+	public boolean contains(Person person){
+		return this.persons.contains(person);
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -128,6 +132,11 @@ public class AccessCircle implements Serializable {
 	public int hashCode() {
 		return (int) this.circleId
 				+ this.name.hashCode();
+	}
+	
+	@Override
+	public String toString(){
+		return person.getFirstName() + "'s " + this.getClass().getName() + " named " + name;
 	}
 
 }

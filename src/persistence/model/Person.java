@@ -69,7 +69,7 @@ public class Person implements Comparable<Person>, Serializable {
 		return this.personId;
 	}
 
-	public void setPersonId(long personId) {
+	private void setPersonId(long personId) {
 		this.personId = personId;
 	}
 
@@ -212,6 +212,12 @@ public class Person implements Comparable<Person>, Serializable {
 	@Override
 	public int hashCode() {
 		return (int) this.personId;
+	}
+	
+	@Override
+	public String toString(){
+		return this.getClass().getName() + " with first name " + firstName
+				+ " and id " + getPersonId();
 	}
 
 	@Override
