@@ -35,7 +35,7 @@ public class GenericManagerBean<T> implements GenericManager<T> {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void save() {
 		entityManager.merge(t);
-		System.out.println("Entity has been merged.");
+		System.out.println(t.toString() + " has been merged.");
 	}
 
 	@Remove

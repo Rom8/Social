@@ -5,7 +5,10 @@ import javax.naming.NamingException;
 
 public class AccessHelper {
 	
+	//TODO handle exceptions!!!!
+	
 	public static <T> GenericManager<T> getGenericManager(){
+		
 		try {
 			InitialContext initialContext = new InitialContext();
 			@SuppressWarnings("unchecked")
@@ -22,4 +25,17 @@ public class AccessHelper {
 		
 	}
 	
+	public static EntityService getEntityService(){
+		InitialContext initialContext;
+		try {
+			initialContext = new InitialContext();
+			EntityService es = (EntityService) initialContext.lookup("java:comp/env/EntityService");
+			initialContext.close();
+			return es;
+		} catch (NamingException e) {
+			System.err.println("Naming Exception in AccessHelper.getEntityService");
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
