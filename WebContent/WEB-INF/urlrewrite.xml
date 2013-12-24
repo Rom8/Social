@@ -13,7 +13,7 @@
 	<rule>
         <from>^/id([0-9]+)$</from>
         <set name="personId">$1</set>
-        <to type="forward">/FrontController</to>
+        <to type="forward">/human.jsp</to>
     </rule>
     
     <rule match-type="regex">

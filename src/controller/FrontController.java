@@ -3,7 +3,6 @@ package controller;
 import java.io.IOException;
 
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -56,10 +55,6 @@ public class FrontController extends HttpServlet {
 		String unban = request.getParameter("unban");
 		String divorce = request.getParameter("divorce");
 
-		if (request.getAttribute(Links.PERSON_ID) != null) {
-			dispatch(request, response, Links.PERSON_ID, "human.jsp");
-		}else
-			
 		if ((email != null) && (password != null)) {
 			singIn(request, response, email, password);
 		}else
@@ -106,7 +101,7 @@ public class FrontController extends HttpServlet {
 		}else
 		
 		if(divorce != null){
-			unban(request, response, unban, oldURI);
+			divorce(request, response, unban, oldURI);
 		}else	
 		
 		if (request.getSession().getAttribute(Links.PERSON_ID) == null) {
@@ -125,10 +120,7 @@ public class FrontController extends HttpServlet {
 
 		removePersonFromCircle(RelationType.LOVER.toString(), owner, person);
 		removePersonFromCircle(RelationType.LOVER.toString(), person, owner);		
-		if(oldURI.endsWith("human.jsp"))
-			response.sendRedirect("/Social/id" + divorce);
-		else
-			response.sendRedirect(oldURI);
+		response.sendRedirect(oldURI);
 	}
 	
 	protected void unban(HttpServletRequest request,
@@ -140,10 +132,7 @@ public class FrontController extends HttpServlet {
 		Person owner = es.getPersonById( (long) session.getAttribute(Links.PERSON_ID) );
 
 		removePersonFromCircle(RelationType.BANNED.toString(), owner, person);
-		if(oldURI.endsWith("human.jsp"))
-			response.sendRedirect("/Social/id" + unban);
-		else
-			response.sendRedirect(oldURI);
+		response.sendRedirect(oldURI);
 	}
 	
 	protected void cancelFriendRequest(HttpServletRequest request,
@@ -156,10 +145,7 @@ public class FrontController extends HttpServlet {
 		
 		removePersonFromCircle(RelationType.MYREQUESTS.toString(), owner, person);
 		removePersonFromCircle(RelationType.REQUESTED.toString(), person, owner);
-		if(oldURI.endsWith("human.jsp"))
-			response.sendRedirect("/Social/id" + cancelFriendRequest);
-		else
-			response.sendRedirect(oldURI);
+		response.sendRedirect(oldURI);
 	}
 	
 	protected void unfollowPerson(HttpServletRequest request,
@@ -172,10 +158,7 @@ public class FrontController extends HttpServlet {
 		
 		removePersonFromCircle(RelationType.IFOLLOW.toString(), owner, person);
 		removePersonFromCircle(RelationType.FOLLOWERS.toString(), person, owner);
-		if(oldURI.endsWith("human.jsp"))
-			response.sendRedirect("/Social/id" + unfollow);
-		else
-			response.sendRedirect(oldURI);
+		response.sendRedirect(oldURI);
 	}
 	
 	protected void followPerson(HttpServletRequest request,
@@ -188,10 +171,7 @@ public class FrontController extends HttpServlet {
 		
 		addPersonToCircle(RelationType.IFOLLOW.toString(), owner, person);
 		addPersonToCircle(RelationType.FOLLOWERS.toString(), person, owner);
-		if(oldURI.endsWith("human.jsp"))
-			response.sendRedirect("/Social/id" + follow);
-		else
-			response.sendRedirect(oldURI);
+		response.sendRedirect(oldURI);
 	}
 	
 	protected void keepHumanAsFollower(HttpServletRequest request,
@@ -210,10 +190,7 @@ public class FrontController extends HttpServlet {
 		
 		addPersonToCircle(RelationType.FOLLOWERS.toString(), owner, person);
 		addPersonToCircle(RelationType.IFOLLOW.toString(), person, owner);
-		if(oldURI.endsWith("human.jsp"))
-			response.sendRedirect("/Social/id" + keepAsFollower);
-		else
-			response.sendRedirect(oldURI);
+		response.sendRedirect(oldURI);
 	}
 	
 	protected void confirmRequest(HttpServletRequest request,
@@ -232,10 +209,7 @@ public class FrontController extends HttpServlet {
 		
 		addPersonToCircle(RelationType.FRIENDS.toString(), owner, person);
 		addPersonToCircle(RelationType.FRIENDS.toString(), person, owner);
-		if(oldURI.endsWith("human.jsp"))
-			response.sendRedirect("/Social/id" + confirmFriendRequest);
-		else
-			response.sendRedirect(oldURI);
+		response.sendRedirect(oldURI);
 	}
 	
 	private void addPersonToCircle(String circleName, Person owner, Person person){
@@ -260,19 +234,7 @@ public class FrontController extends HttpServlet {
 		Person owner = es.getPersonById( (long) session.getAttribute(Links.PERSON_ID) );
 		addPersonToCircle(RelationType.MYREQUESTS.toString(), owner, person);
 		addPersonToCircle(RelationType.REQUESTED.toString(), person, owner);
-		if(oldURI.endsWith("human.jsp"))
-			response.sendRedirect("/Social/id" + friendRequest);
-		else
-			response.sendRedirect(oldURI);
-	}
-	
-	protected void dispatch(HttpServletRequest request,
-			HttpServletResponse response, String link, String page) throws ServletException, IOException {
-		long id = Long.parseLong((String) request.getAttribute(link));
-		RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-		Person person = es.getPersonById(id);
-		request.setAttribute(Links.PERSON, person);
-		dispatcher.forward(request, response);
+		response.sendRedirect(oldURI);
 	}
 	
 	protected void singIn(HttpServletRequest request,
