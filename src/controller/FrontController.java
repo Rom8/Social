@@ -240,17 +240,17 @@ public class FrontController extends HttpServlet {
 	protected void singIn(HttpServletRequest request,
 			HttpServletResponse response, 
 			String email, String password) throws ServletException, IOException{
-		HttpSession session = request.getSession(false);
 		Person person = es.singPersonIn(email, password);
 		if (person != null) {
-			session = request.getSession(true);
+			HttpSession session = request.getSession(true);
 			synchronized (session) {
 				session.setAttribute(Links.PERSON_ID, Long.valueOf(person.getPersonId()));
 			}
 			Helper.redirectSingedInToMyPage(session, response);
-		} else
+		} else{
 			response.sendRedirect(
-					"signin.jsp?signNew=Combination+of+such+email+and+password+was+not+found.");
+					"signin.jsp?signNew=Combination+of+such+email+and+password+was+not+found.");			
+		}
 	}
 
 	protected void singUp(HttpServletRequest request,
@@ -270,7 +270,7 @@ public class FrontController extends HttpServlet {
 	
 	protected void signOut(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String personPage = "/Social/id" + Helper.getSessionPersonId(request.getSession(false));
+		String personPage = "/Social/id" + es.getOwner(request.getSession(false)).getPersonId();
 		request.getSession(false).invalidate();
 		response.sendRedirect(personPage);
 	}

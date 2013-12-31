@@ -1,15 +1,15 @@
+<%@page import="persistence.entitymanagers.AccessHelper"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Set"%>
 <%@page import="persistence.model.AccessCircle"%>
 <%@page import="persistence.model.RelationType"%>
 <%@page import="persistence.model.Person"%>
-<%@page import="controller.Helper"%>
 <%@page import="persistence.entitymanagers.EntityService"%>
 <%@page	contentType="text/html; charset=ISO-8859-1" %>
 <%@page pageEncoding="ISO-8859-1"%>
 <%
-EntityService es = Helper.getEntityService();
+EntityService es = AccessHelper.getEntityService();
 Person owner = es.getOwner(session);
 Set<AccessCircle> circleList = owner.getAccessCircles();
 Map<String, Integer> circleSizeMap = new HashMap<String, Integer>(circleList.size(), 1);

@@ -1,13 +1,13 @@
+<%@page import="persistence.entitymanagers.AccessHelper"%>
 <%@page import="persistence.model.RelationType"%>
 <%@page import="helpers.CircleHelper"%>
 <%@page import="persistence.model.Person"%>
-<%@page import="controller.Helper"%>
 <%@page import="persistence.entitymanagers.EntityService"%>
 <%@page import="persistence.model.AccessCircle"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
-EntityService es = Helper.getEntityService();
+EntityService es = AccessHelper.getEntityService();
 Person owner = es.getOwner(session);
 String circleName = request.getParameter("circleName");
 AccessCircle circle = es.getCircle(circleName, owner);

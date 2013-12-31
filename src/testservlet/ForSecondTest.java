@@ -189,6 +189,9 @@ public class ForSecondTest extends HttpServlet {
 		
 //		String s = RelationType.FOLLOWERS.nameLine();
 		
+		AccessCircle ac = es.getCircle(30);
+		out.println((String) ac.getProperties().get("testName"));
+		
 		out.println("nothing");
 		out.println("</body>");
 		out.println("</html>");

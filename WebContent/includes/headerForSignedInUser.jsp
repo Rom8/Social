@@ -1,12 +1,16 @@
+<%@page import="persistence.entitymanagers.AccessHelper"%>
+<%@page import="persistence.entitymanagers.EntityService"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="controller.Helper" %>
+<%
+EntityService es = AccessHelper.getEntityService();
+ %>
 <header>
 <table align="center" bgcolor="silver">
 	<tr>
 		<td width="80">
-			<a href="/Social/id<%=Helper
-			.getSessionPersonId(session) %>">My page</a>
+			<a href="/Social/id<%=es.getOwner(session).getPersonId() %>">My page</a>
 		</td>
 		<td width="80">
 			<a href="/Social/contacts">Contacts</a>

@@ -51,7 +51,7 @@ public class Person implements Comparable<Person>, Serializable {
 	private int salt;
 	private Set<AccessCircle> accessCircles = new HashSet<AccessCircle>();
 
-	public Person() {
+	protected Person() {
 	}
 	
 	public Person(String email, String password, String firstName){

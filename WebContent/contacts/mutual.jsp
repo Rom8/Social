@@ -1,12 +1,12 @@
+<%@page import="persistence.entitymanagers.AccessHelper"%>
 <%@page import="java.util.List"%>
-<%@page import="controller.Helper"%>
 <%@page import="persistence.entitymanagers.EntityService"%>
 <%@page import="persistence.model.Person"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
-EntityService es = Helper.getEntityService();
+EntityService es = AccessHelper.getEntityService();
 String mutual = request.getParameter("mutual");
 long personId = Long.parseLong(mutual);
 Person person = es.getPersonById(personId);
